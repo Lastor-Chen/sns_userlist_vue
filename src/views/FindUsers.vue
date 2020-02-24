@@ -3,77 +3,78 @@
     <!-- <p id="content-status" class="text-center">Now loading...</p> -->
     <div id="data-panel" class="row" data-mode="card">
       <!-- user data 放置場 -->
-      <div class="card-top col-6 col-lg-4 col-xl-3 mb-4">
-        <div class="card">
-          <div class="banner">
-            <img class="show-modal" src="https://picsum.photos/350/100?random=0" data-toggle="modal" data-target="#modal"
-              data-id="492">
-          </div>
-          <div class="row pt-2">
-            <img class="avatar show-modal" src="https://uinames.com/api/photos/male/14.jpg" alt="photo" data-toggle="modal"
-              data-target="#modal" data-id="492">
-            <button class="btn btn-follow btn-outline-primary" type="button" data-follow="Follow" data-following="Following"
-              data-id="492"></button>
-          </div>
-          <div class="card-body pl-3 pr-3">
-            <h5 class="card-title show-modal" data-toggle="modal" data-target="#modal" data-id="492">Jenel</h5>
-            <h6 class="card-subtitle mb-2 text-muted">@<span class="show-modal" data-toggle="modal" data-target="#modal"
-                data-id="492">jenel90</span></h6>
-            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing......</p>
-          </div>
-        </div>
-      </div>
+      <UserCard
+        v-for="user in users"
+        :key="user.id"
+        :user="user"
+      />
     </div>
   </div>
 </template>
 
-<style scoped>
-.show-modal {
-  cursor: pointer;
+<script>
+import UserCard from '../components/UserCard.vue'
+
+const dummyData = {
+  "results": [
+    {
+      "id": 457,
+      "name": "Lâm",
+      "surname": "Quân",
+      "email": "lâm.quân@example.com",
+      "gender": "female",
+      "age": 21,
+      "region": "Vietnam",
+      "birthday": "05/13/1998",
+      "avatar": "https://uinames.com/api/photos/female/19.jpg",
+      "created_at": "2019-07-15T10:53:13.949Z",
+      "updated_at": "2019-07-15T10:53:13.949Z"
+    },
+    {
+      "id": 458,
+      "name": "Biljana",
+      "surname": "Turković",
+      "email": "biljana-89@example.com",
+      "gender": "female",
+      "age": 30,
+      "region": "Bosnia and Herzegovina",
+      "birthday": "11/26/1989",
+      "avatar": "https://uinames.com/api/photos/female/22.jpg",
+      "created_at": "2019-07-15T10:53:14.289Z",
+      "updated_at": "2019-07-15T10:53:14.289Z"
+    },
+    {
+      "id": 459,
+      "name": "Radomír",
+      "surname": "Moravčík",
+      "email": "radomír89@example.com",
+      "gender": "male",
+      "age": 30,
+      "region": "Slovakia",
+      "birthday": "11/30/1989",
+      "avatar": "https://uinames.com/api/photos/male/19.jpg",
+      "created_at": "2019-07-15T10:53:14.616Z",
+      "updated_at": "2019-07-15T10:53:14.616Z"
+    }
+  ]
 }
 
-.banner {
-  overflow: hidden;
-  width: 100%;
-  height: 100px;
-  border-top-left-radius: .25rem;
-  border-top-right-radius: .25rem;
+export default {
+  data () {
+    return {
+      users: []
+    }
+  },
+  components: {
+    UserCard
+  },
+  created () {
+    this.fetchUsers()
+  },
+  methods: {
+    fetchUsers() {
+      this.users = dummyData.results
+    }
+  }
 }
-
-.avatar {
-  max-width: 70px;
-  margin-top: calc(-70px/2 - 0.5rem); /* 求出讓avatar能剛好卡一半的位置 */
-  max-height: 70px; /* mt是負值會影響到高, 需重設 */
-  margin-left: calc(15px + 1rem); /* 與card-body對齊 */
-  box-shadow: 0 0 0 5px #fff;
-  border-radius: 50%;
-}
-
-.btn-follow {
-  margin: 0 2rem 0 auto;
-  min-width: 85px;
-  font-size: 0.8em;
-}
-
-.btn-outline-primary::before {
-  content: attr(data-follow);  /* 按鈕文字 */
-}
-
-.btn-primary::before {
-  content: attr(data-following);
-}
-
-.card-body {
-  padding: 0.6rem;
-}
-
-.card-title {
-  margin-bottom: 0.3rem;
-  display: inline-block; /* 讓按鈕判定框符合文字 */
-}
-
-.card-title:hover,
-.card-subtitle span:hover {
-  text-decoration: underline;
-}
-</style>
+</script>
