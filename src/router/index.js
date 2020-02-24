@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import FindUsers from '../views/FindUsers.vue'
+import Users from '../views/Users.vue'
 
 Vue.use(VueRouter)
 
@@ -13,7 +13,12 @@ const routes = [
   {
     path: '/find',
     name: 'find',
-    component: FindUsers
+    component: Users
+  },
+  {
+    path: '/following',
+    name: 'following',
+    component: Users
   },
   {
     path: '*',
@@ -23,6 +28,7 @@ const routes = [
 ]
 
 const router = new VueRouter({
+  linkExactActiveClass: 'active',
   routes
 })
 

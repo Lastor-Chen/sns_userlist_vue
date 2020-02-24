@@ -37,11 +37,12 @@
               <span class="nav-value" data-count="0"></span>
             </a>
           </li>
+          <!-- Following link -->
           <li class="nav-item">
-            <a id="nav-following" class="nav-link" href="?route=following">
+            <router-link to="following" id="nav-following" class="nav-link">
               <span class="nav-label">Following</span>
               <span class="nav-value" data-count="0"></span>
-            </a>
+            </router-link>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#">
@@ -55,11 +56,12 @@
               <span class="nav-value" data-count="0"></span>
             </a>
           </li>
+          <!-- Find link -->
           <li class="nav-item">
-            <a id="nav-find" class="nav-link active" href="index.html">
+            <router-link to="find" id="nav-find" class="nav-link">
               <span class="nav-label">Find</span>
               <span class="nav-value" data-count="0"></span>
-            </a>
+            </router-link>
           </li>
         </ul>
       </div>

@@ -79,19 +79,33 @@ export default {
   },
   data () {
     return {
-      users: []
+      users: [],
+      allUsers: [],
+      following: []
     }
   },
   components: {
     UserCard,
     UserList
   },
+  watch: {
+    '$route': function(to) {
+      if (to.name === 'find') { this.users = this.allUsers }
+      if (to.name === 'following') { this.users = this.following }
+    }
+  },
   created () {
-    this.fetchUsers()
+    const route = this.$route.name
+    if (route === 'find') { this.fetchUsers() }
+    if (route === 'following') { this.fetchFollowing() }
   },
   methods: {
     fetchUsers() {
-      this.users = dummyData.results
+      this.allUsers = dummyData.results
+      this.users = [ ...this.allUsers ]
+    },
+    fetchFollowing() {
+      this.users = [ ...this.following ]
     }
   }
 }
