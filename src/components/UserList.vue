@@ -26,6 +26,8 @@
 </template>
 
 <script>
+import { getEmailAccount } from '../utils/mixins.js'
+
 export default {
   props: {
     user: {
@@ -33,11 +35,7 @@ export default {
       required: true
     }
   },
-  filters: {
-    getEmailAccount(email) {
-      return email.split('@')[0]
-    }
-  }
+  mixins: [getEmailAccount]
 }
 </script>
 

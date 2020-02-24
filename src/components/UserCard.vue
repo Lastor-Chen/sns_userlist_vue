@@ -27,7 +27,7 @@
         <h5 class="card-title show-modal" data-toggle="modal" data-target="#modal" :data-id="user.id">{{user.name}}</h5>
         <h6 class="card-subtitle mb-2 text-muted">
           <span class="show-modal" data-toggle="modal" data-target="#modal" :data-id="user.id">
-            @{{user.email}}
+            @{{user.email | getEmailAccount}}
           </span>
         </h6>
         <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing......</p>
@@ -37,13 +37,16 @@
 </template>
 
 <script>
+import { getEmailAccount } from '../utils/mixins.js'
+
 export default {
   props: {
     user: {
       type: Object,
       required: true
     }
-  }
+  },
+  mixins: [getEmailAccount]
 }
 </script>
 
