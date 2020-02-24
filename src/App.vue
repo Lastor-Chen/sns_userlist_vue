@@ -2,7 +2,9 @@
   <div id="app">
     <Navbar/>
     <ModeBar/>
-    <router-view/>
+    <main role="main" class="pt-3">
+      <router-view/>
+    </main>
   </div>
 </template>
 
