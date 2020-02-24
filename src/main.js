@@ -1,7 +1,10 @@
 import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
+
 import './assets/main.css'
+import jQuery from 'jquery'
+window.$ = window.jQuery = jQuery
 
 Vue.config.productionTip = false
 
