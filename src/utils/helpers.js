@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const apiHelper = axios.create({
-  baseURL: 'https://forum-express-api.herokuapp.com/api'
+  baseURL: 'https://lighthouse-user-api.herokuapp.com/api/v1'
 })
 
 export { apiHelper }
