@@ -103,6 +103,7 @@ export default {
     fetchUsers() {
       this.allUsers = dummyData.results
       this.users = [ ...this.allUsers ]
+      this.$emit('afterFetchUsers', this.users.length)
     },
     fetchFollowing() {
       this.users = [ ...this.following ]

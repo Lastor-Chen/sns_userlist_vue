@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <!-- Navbar -->
-    <Navbar/>
+    <Navbar :find-count="findCount"/>
 
     <!-- mode 切換 & 搜尋提示 -->
     <ModeBar
@@ -11,7 +11,10 @@
 
     <!-- main content -->
     <main role="main" class="pt-3">
-      <router-view :mode="mode"/>
+      <router-view 
+        :mode="mode"
+        @afterFetchUsers="afterFetchUsers"
+      />
     </main>
 
     <!-- Bootstrap Modal -->
@@ -30,7 +33,8 @@ export default {
   name: 'App',
   data() {
     return {
-      mode: 'card'
+      mode: 'card',
+      findCount: 0
     }
   },
   components: {
@@ -41,6 +45,9 @@ export default {
   methods: {
     afterToggleMode(selectedMode) {
       this.mode = selectedMode
+    },
+    afterFetchUsers(count) {
+      this.findCount = count
     }
   }
 }
