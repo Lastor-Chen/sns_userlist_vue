@@ -18,6 +18,7 @@
         :mode="mode"
         @afterFetchUsers="afterFetchUsers"
         @afterToggleFollow="afterToggleFollow"
+        @afterLoadUsers="afterLoadUsers"
       />
     </main>
 
@@ -59,6 +60,9 @@ export default {
       this.mode = selectedMode
     },
     afterFetchUsers(count) {
+      this.findCount = count
+    },
+    afterLoadUsers(count) {
       this.findCount = count
     },
     afterToggleFollow(count) {
