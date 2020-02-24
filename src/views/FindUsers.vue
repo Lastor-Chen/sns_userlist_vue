@@ -1,13 +1,19 @@
 <template>
   <div class="container">
     <!-- <p id="content-status" class="text-center">Now loading...</p> -->
-    <div id="data-panel" class="row" data-mode="card">
+    <div id="data-panel" class="row">
       <!-- user data 放置場 -->
-      <UserCard
-        v-for="user in users"
-        :key="user.id"
-        :user="user"
-      />
+      <template v-if="mode === 'card'">
+        <UserCard
+          v-for="user in users"
+          :key="user.id"
+          :user="user"
+        />
+      </template>
+
+      <template v-else>
+        <h1>list mode</h1>
+      </template>
     </div>
   </div>
 </template>
@@ -60,6 +66,12 @@ const dummyData = {
 }
 
 export default {
+  props: {
+    mode: {
+      type: String,
+      required: true
+    }
+  },
   data () {
     return {
       users: []

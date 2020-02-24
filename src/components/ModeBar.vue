@@ -2,9 +2,21 @@
   <div class="container mt-3">
     <div class="d-flex align-items-center">
       <!-- list mode toggler -->
-      <div id="list-mode" class="nav mr-3">
-        <i class="fas fa-th p-1" data-mode="card"></i>
-        <i class="fas fa-bars p-1" data-mode="list"></i>
+      <div 
+        id="list-mode"
+        class="nav mr-3"
+        @click="toggleMode"
+      >
+        <i 
+          class="fas fa-th p-1"
+          :class="{ active: mode === 'card' }"
+          data-mode="card"
+        ></i>
+        <i
+          class="fas fa-bars p-1"
+          :class="{ active: mode === 'list' }"
+          data-mode="list"
+        ></i>
       </div>
 
       <!-- Search result info -->
@@ -12,6 +24,25 @@
     </div>
   </div>
 </template>
+
+<script>
+import $ from 'jquery'
+
+export default {
+  props: {
+    mode: {
+      type: String,
+      required: true
+    }
+  },
+  methods: {
+    toggleMode(e) {
+      const selectedMode = $(e.target).attr('data-mode')
+      this.$emit('afterToggleMode', selectedMode)
+    }
+  }
+}
+</script>
 
 <style scoped>
 #list-mode i {
@@ -26,5 +57,9 @@
 
 #list-mode i.fa-bars {
   width: 38.8px;
+}
+
+#list-mode i.active {
+  border: 1px solid #007bff;
 }
 </style>
