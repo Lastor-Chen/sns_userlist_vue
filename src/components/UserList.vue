@@ -16,26 +16,33 @@
 
     <p class="col-5 col-xl-5 mb-0">Lorem ipsum dolor sit amet, consectetur adipisicing......</p>
     <div class="col-2 col-xl-3">
-      <button class="btn btn-outline-primary btn-follow"
+
+      <button class="btn btn-follow"
+        :class="{ 'btn-primary': user.isFollowed, 'btn-outline-primary': !user.isFollowed }"
         data-follow="Follow"
         data-following="Following"
         data-id="406"
+        @click="toggleFollow"
       ></button>
+
     </div>
   </div>
 </template>
 
 <script>
-import { getEmailAccount } from '../utils/mixins.js'
+import { getEmailAccount, toggleFollow } from '../utils/mixins.js'
 
 export default {
+  mixins: [
+    getEmailAccount,
+    toggleFollow
+  ],
   props: {
     user: {
       type: Object,
       required: true
     }
-  },
-  mixins: [getEmailAccount]
+  }
 }
 </script>
 

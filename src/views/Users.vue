@@ -8,6 +8,7 @@
           v-for="user in users"
           :key="user.id"
           :user="user"
+          @afterToggleFollow="afterToggleFollow"
         />
       </template>
 
@@ -16,6 +17,7 @@
           v-for="user in users"
           :key="user.id"
           :user="user"
+          @afterToggleFollow="afterToggleFollow"
         />
       </template>
     </div>
@@ -79,9 +81,7 @@ export default {
   },
   data () {
     return {
-      users: [],
-      allUsers: [],
-      following: []
+      users: []
     }
   },
   components: {
@@ -90,8 +90,8 @@ export default {
   },
   watch: {
     '$route': function(to) {
-      if (to.name === 'find') { this.users = this.allUsers }
-      if (to.name === 'following') { this.users = this.following }
+      if (to.name === 'find') { this.fetchUsers() }
+      if (to.name === 'following') { this.fetchFollowing() }
     }
   },
   created () {
@@ -101,12 +101,22 @@ export default {
   },
   methods: {
     fetchUsers() {
-      this.allUsers = dummyData.results
-      this.users = [ ...this.allUsers ]
+      // 判斷 isFollowed
+      const following = JSON.parse(sessionStorage.getItem('following'))
+      for (const item of dummyData.results ) {
+        item.isFollowed = following.some(user => user.id === item.id)
+      }
+
+      this.users = dummyData.results
+
       this.$emit('afterFetchUsers', this.users.length)
     },
     fetchFollowing() {
-      this.users = [ ...this.following ]
+      const following = JSON.parse(sessionStorage.getItem('following'))
+      this.users = following
+    },
+    afterToggleFollow(count) {
+      this.$emit('afterToggleFollow', count)
     }
   }
 }

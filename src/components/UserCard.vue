@@ -17,11 +17,15 @@
           data-target="#modal"
           :data-id="user.id"
         />
-        <button class="btn btn-follow btn-outline-primary"
+
+        <button class="btn btn-follow"
+          :class="{ 'btn-primary': user.isFollowed, 'btn-outline-primary': !user.isFollowed }"
           data-follow="Follow"
           data-following="Following"
           :data-id="user.id"
+          @click="toggleFollow"
         ></button>
+
       </div>
       <div class="card-body pl-3 pr-3">
         <h5 class="card-title show-modal" data-toggle="modal" data-target="#modal" :data-id="user.id">{{user.name}}</h5>
@@ -37,16 +41,18 @@
 </template>
 
 <script>
-import { getEmailAccount } from '../utils/mixins.js'
+import { getEmailAccount, toggleFollow } from '../utils/mixins.js'
 
 export default {
+  mixins: [
+    getEmailAccount, toggleFollow
+  ],
   props: {
     user: {
       type: Object,
       required: true
     }
-  },
-  mixins: [getEmailAccount]
+  }
 }
 </script>
 

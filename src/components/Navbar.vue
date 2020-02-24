@@ -41,7 +41,7 @@
           <li class="nav-item">
             <router-link to="following" id="nav-following" class="nav-link">
               <span class="nav-label">Following</span>
-              <span class="nav-value" data-count="0"></span>
+              <span class="nav-value" :data-count="followingCount"></span>
             </router-link>
           </li>
           <li class="nav-item">
@@ -73,6 +73,10 @@
 export default {
   props: {
     findCount: {
+      type: Number,
+      required: true
+    },
+    followingCount: {
       type: Number,
       required: true
     }

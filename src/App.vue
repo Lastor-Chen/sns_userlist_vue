@@ -1,7 +1,10 @@
 <template>
   <div id="app">
     <!-- Navbar -->
-    <Navbar :find-count="findCount"/>
+    <Navbar 
+      :find-count="findCount"
+      :following-count="followingCount"
+    />
 
     <!-- mode 切換 & 搜尋提示 -->
     <ModeBar
@@ -14,6 +17,7 @@
       <router-view 
         :mode="mode"
         @afterFetchUsers="afterFetchUsers"
+        @afterToggleFollow="afterToggleFollow"
       />
     </main>
 
@@ -34,7 +38,8 @@ export default {
   data() {
     return {
       mode: 'card',
-      findCount: 0
+      findCount: 0,
+      followingCount: 0,
     }
   },
   components: {
@@ -42,12 +47,22 @@ export default {
     ModeBar,
     Modal
   },
+  created() {
+    // 初始化 sessionStorage
+    const following = JSON.parse(sessionStorage.getItem('following'))
+    if (!following) return sessionStorage.setItem('following', '[]')
+
+    this.followingCount = following.length
+  },
   methods: {
     afterToggleMode(selectedMode) {
       this.mode = selectedMode
     },
     afterFetchUsers(count) {
       this.findCount = count
+    },
+    afterToggleFollow(count) {
+      this.followingCount = count
     }
   }
 }
