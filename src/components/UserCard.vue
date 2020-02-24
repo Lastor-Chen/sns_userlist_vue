@@ -2,19 +2,34 @@
   <div class="card-top col-6 col-lg-4 col-xl-3 mb-4">
     <div class="card">
       <div class="banner">
-        <img class="show-modal" src="https://picsum.photos/350/100?random=0" data-toggle="modal" data-target="#modal"
-          data-id="492">
+        <img class="show-modal" 
+          src="https://picsum.photos/350/100?random=0"
+          data-toggle="modal"
+          data-target="#modal"
+          :data-id="user.id"
+        />
       </div>
       <div class="row pt-2">
-        <img class="avatar show-modal" src="https://uinames.com/api/photos/male/14.jpg" alt="photo" data-toggle="modal"
-          data-target="#modal" data-id="492">
-        <button class="btn btn-follow btn-outline-primary" type="button" data-follow="Follow" data-following="Following"
-          data-id="492"></button>
+        <img class="avatar show-modal"
+          :src="user.avatar"
+          alt="photo"
+          data-toggle="modal"
+          data-target="#modal"
+          :data-id="user.id"
+        />
+        <button class="btn btn-follow btn-outline-primary"
+          data-follow="Follow"
+          data-following="Following"
+          :data-id="user.id"
+        ></button>
       </div>
       <div class="card-body pl-3 pr-3">
-        <h5 class="card-title show-modal" data-toggle="modal" data-target="#modal" data-id="492">Jenel</h5>
-        <h6 class="card-subtitle mb-2 text-muted">@<span class="show-modal" data-toggle="modal" data-target="#modal"
-            data-id="492">jenel90</span></h6>
+        <h5 class="card-title show-modal" data-toggle="modal" data-target="#modal" :data-id="user.id">{{user.name}}</h5>
+        <h6 class="card-subtitle mb-2 text-muted">
+          <span class="show-modal" data-toggle="modal" data-target="#modal" :data-id="user.id">
+            @{{user.email}}
+          </span>
+        </h6>
         <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing......</p>
       </div>
     </div>
