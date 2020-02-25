@@ -10,16 +10,16 @@
         <div class="modal-body">
           <div class="row">
             <div class="col-4">
-              <img id="show-avatar" class="img-fluid" src="https://uinames.com/api/photos/female/9.jpg" alt="avatar photo">
+              <img id="show-avatar" class="img-fluid" :src="user.avatar" alt="avatar photo">
             </div>
             <div class="col-8">
               <div id="show-info" class="row border-bottom pb-2">
-                <!-- user data 放置場 -->
-                <div class="col-12 h5">Jenel Ivănceanu</div>
-                <div class="col-12 col-lg-3 mb-2 icon-gender">male</div>
-                <div class="col-12 col-lg-9 mb-2 icon-created_at">Joined Jul 15, 2019</div>
-                <div class="col-12 col-lg-3 mb-2 icon-region">Romania</div>
-                <div class="col-12 col-lg-9 mb-2 icon-email">jenel90@example.com</div>
+                <!-- user data -->
+                <div class="col-12 h5">{{user.name}}</div>
+                <div class="col-12 col-lg-5 mb-2 icon-gender">{{user.gender}}</div>
+                <div class="col-12 col-lg-7 mb-2 icon-created_at">Joined {{user.created_at | joinedDate}}</div>
+                <div class="col-12 col-lg-5 mb-2 icon-region">{{user.region}}</div>
+                <div class="col-12 col-lg-7 mb-2 icon-email">{{user.email}}</div>
               </div>
               <div class="row pt-2">
                 <div class="col">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Lorem ipsum dolor sit amet, consectetur adipisicing elit. Explicabo aliquam quidem provident voluptates cupiditate maiores corporis voluptas, ullam quasi rem nemo a ea accusantium consectetur, optio velit cum, itaque illum.</div>
@@ -31,6 +31,22 @@
     </div>
   </div>
 </template>
+
+<script>
+import { joinedDate } from '../utils/mixins.js'
+
+export default {
+  mixins: [
+    joinedDate
+  ],
+  props: {
+    user: {
+      type: Object,
+      required: true
+    }
+  }
+}
+</script>
 
 <style scoped>
 .icon-created_at::before {

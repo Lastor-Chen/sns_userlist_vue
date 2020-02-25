@@ -20,11 +20,12 @@
         @afterFetchFollowing="afterFetchFollowing"
         @afterToggleFollow="afterToggleFollow"
         @afterLoadUsers="afterLoadUsers"
+        @afterClickUser="afterClickUser"
       />
     </main>
 
     <!-- Bootstrap Modal -->
-    <Modal/>
+    <Modal :user="modalUser" />
   </div>
 </template>
 
@@ -41,7 +42,8 @@ export default {
     return {
       mode: 'card',
       findCount: 0,
-      followingCount: 0
+      followingCount: 0,
+      modalUser: {}
     }
   },
   components: {
@@ -71,6 +73,9 @@ export default {
     },
     afterToggleFollow(count) {
       this.followingCount = count
+    },
+    afterClickUser(user) {
+      this.modalUser = user
     }
   }
 }

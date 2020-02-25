@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <!-- <p id="content-status" class="text-center">Now loading...</p> -->
-    <div id="data-panel" class="row">
+    <div id="data-panel" class="row"  @click="handleClick">
       <!-- user data 放置場 -->
       <template v-if="mode === 'card'">
         <UserCard
@@ -124,6 +124,13 @@ export default {
         if (this.route === 'following') {
           this.followingMore()
         }
+      }
+    },
+    handleClick(e) {
+      if (e.target.matches('.show-modal')) {
+        const targetId = +e.target.dataset.id
+        const user = this.users.find(user => user.id === targetId)
+        this.$emit('afterClickUser', user)
       }
     }
   }
