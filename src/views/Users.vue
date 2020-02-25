@@ -5,6 +5,9 @@
         v-else
         @click="handleClick"
       >
+      <p class="col-12 text-center" v-if="!users.length">
+        No results found
+      </p>
       <!-- user data panel -->
       <template v-if="mode === 'card'">
         <UserCard
