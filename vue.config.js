@@ -10,4 +10,7 @@ module.exports = {
       }),
     ],
   },
+  publicPath: process.env.NODE_ENV === 'production'
+    ? '/sns_userlist_vue/'
+    : '/'
 }
