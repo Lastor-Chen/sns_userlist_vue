@@ -4,7 +4,6 @@
     <Navbar 
       :find-count="findCount"
       :following-count="followingCount"
-      @afterSearch="afterSearch"
     />
 
     <!-- mode 切換 & 搜尋提示 -->
@@ -17,7 +16,6 @@
     <main role="main" class="pt-3">
       <router-view
         :mode="mode"
-        :searchUsers="searchUsers"
         @afterFetchUsers="afterFetchUsers"
         @afterFetchFollowing="afterFetchFollowing"
         @afterToggleFollow="afterToggleFollow"
@@ -45,8 +43,7 @@ export default {
       mode: 'card',
       findCount: 0,
       followingCount: 0,
-      modalUser: {},
-      searchUsers: []
+      modalUser: {}
     }
   },
   components: {
@@ -79,9 +76,6 @@ export default {
     },
     afterClickUser(user) {
       this.modalUser = user
-    },
-    afterSearch(result) {
-      this.searchUsers = result
     }
   }
 }

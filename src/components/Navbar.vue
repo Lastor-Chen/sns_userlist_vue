@@ -18,6 +18,7 @@
       <!-- search form -->
       <form id="search-form" class="form-inline position-relative" @submit.prevent="handleSearch">
         <input id="search-input" class="form-control mr-sm-2" type="text"
+          name="q"
           v-model="search"
           placeholder="Search user"
           required
@@ -74,9 +75,6 @@
 </template>
 
 <script>
-import usersAPI from '../apis/users.js'
-import { Toast } from '../utils/helpers.js'
-
 export default {
   props: {
     findCount: {
@@ -90,34 +88,15 @@ export default {
   },
   data() {
     return {
-      search: ''
+      search: this.$route.query.q || ''
     }
   },
   methods: {
-    async handleSearch() {
-      try {
-        const searchFormat = this.search.trim()
-        if (!searchFormat) return false
-        const regex = new RegExp(searchFormat, 'i')
+    handleSearch() {
+      const query = this.search.trim()
+      if (!query) return false
 
-        // Query API
-        const response = await usersAPI.getUsers()
-        if (response.statusText !== 'OK') { throw new Error(response.statusText) }
-
-        const users = response.data.results
-        const searchUsers = users.filter(user => {
-          const account = user.email.split('@')[0]
-          return regex.test(account)
-        })
-
-        this.$emit('afterSearch', searchUsers)
-
-      } catch (err) {
-        Toast.fire({
-          icon: 'error',
-          title: '伺服器忙碌中，請稍後再試'
-        })
-      }
+      this.$router.push(`/search?q=${query}`)
     }
   }
 }

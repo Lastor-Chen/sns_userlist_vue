@@ -41,9 +41,6 @@ export default {
     mode: {
       type: String,
       required: true
-    },
-    searchUsers: {
-      type: Array
     }
   },
   data () {
@@ -65,14 +62,12 @@ export default {
       // 真實跳頁，重掛 scroll 監聽
       $(window).scrollTop(0)
       this.$router.go()
-    },
-    searchUsers: function(newVal) {
-      this.users = [...newVal]
     }
   },
   created () {
     if (this.route === 'find') { this.fetchUsers() }
     if (this.route === 'following') { this.fetchFollowing() }
+    if (this.route === 'search') { this.fetchSearch() }
 
     // 監聽 scroll 無限下拉分頁
     $(window).on('scroll', this.handleScroll)
@@ -113,6 +108,35 @@ export default {
       // 通知父層 reset findCount
       this.$emit('afterFetchFollowing')
       this.isLoading = false
+    },
+    async fetchSearch() {
+      try {
+        const query = this.$route.query.q
+        const regex = new RegExp(query, 'i')
+
+        // Query API
+        const response = await usersAPI.getUsers()
+        if (response.statusText !== 'OK') { throw new Error(response.statusText) }
+
+        // search 符合之 users，並添加 isFollowed 屬性
+        const following = JSON.parse(sessionStorage.getItem('following'))
+        const searchUsers = response.data.results
+          .filter(user => {
+            user.isFollowed = following.some(followingUser => user.id === followingUser.id)
+            const account = user.email.split('@')[0]
+            return regex.test(account)
+          })
+
+        this.users = searchUsers
+        this.isLoading= false
+
+      } catch (err) {
+        this.isLoading = false
+        Toast.fire({
+          icon: 'error',
+          title: '伺服器忙碌中，請稍後再試'
+        })
+      }
     },
     afterToggleFollow(count) {
       this.$emit('afterToggleFollow', count)
