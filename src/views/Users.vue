@@ -1,8 +1,11 @@
 <template>
   <div class="container">
-    <!-- <p id="content-status" class="text-center">Now loading...</p> -->
-    <div id="data-panel" class="row"  @click="handleClick">
-      <!-- user data 放置場 -->
+    <Spinner v-if="isLoading" />
+    <div id="data-panel" class="row"
+        v-else
+        @click="handleClick"
+      >
+      <!-- user data panel -->
       <template v-if="mode === 'card'">
         <UserCard
           v-for="user in users"
@@ -27,6 +30,7 @@
 <script>
 import UserCard from '../components/UserCard.vue'
 import UserList from '../components/UserList.vue'
+import Spinner from '../components/Spinner.vue'
 import usersAPI from '../apis/users.js'
 import $ from 'jquery'
 import { Toast } from '../utils/helpers.js'
@@ -43,12 +47,14 @@ export default {
       initialUsers: [],
       users: [],
       LIMIT: 24,
-      route: this.$route.name
+      route: this.$route.name,
+      isLoading: true
     }
   },
   components: {
     UserCard,
-    UserList
+    UserList,
+    Spinner
   },
   watch: {
     '$route': function() {
@@ -83,8 +89,10 @@ export default {
 
         // 通知父層 users 數量
         this.$emit('afterFetchUsers', this.users.length)
+        this.isLoading = false
 
       } catch (err) {
+        this.isLoading = false
         Toast.fire({
           icon: 'error',
           title: '伺服器忙碌中，請稍後再試'
@@ -95,7 +103,9 @@ export default {
       const following = JSON.parse(sessionStorage.getItem('following'))
       this.users = following
 
+      // 通知父層 reset findCount
       this.$emit('afterFetchFollowing')
+      this.isLoading = false
     },
     afterToggleFollow(count) {
       this.$emit('afterToggleFollow', count)
