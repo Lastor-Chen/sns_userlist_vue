@@ -1,3 +1,5 @@
+import moment from 'moment'
+
 const getEmailAccount = {
   filters: {
     getEmailAccount(email) {
@@ -30,4 +32,12 @@ const toggleFollow = {
   }
 }
 
-export { getEmailAccount, toggleFollow }
+const joinedDate = {
+  filters: {
+    joinedDate(date) {
+      return moment(date).format('LL')
+    }
+  }
+}
+
+export { getEmailAccount, toggleFollow, joinedDate }
