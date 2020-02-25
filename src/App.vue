@@ -9,6 +9,7 @@
     <!-- mode 切換 & 搜尋提示 -->
     <ModeBar
       :mode="mode"
+      :searchCount="searchCount"
       @afterToggleMode="afterToggleMode"
     />
 
@@ -21,6 +22,7 @@
         @afterToggleFollow="afterToggleFollow"
         @afterLoadUsers="afterLoadUsers"
         @afterClickUser="afterClickUser"
+        @afterSearch="afterSearch"
       />
     </main>
 
@@ -43,6 +45,7 @@ export default {
       mode: 'card',
       findCount: 0,
       followingCount: 0,
+      searchCount: 0,
       modalUser: {}
     }
   },
@@ -76,6 +79,9 @@ export default {
     },
     afterClickUser(user) {
       this.modalUser = user
+    },
+    afterSearch(count) {
+      this.searchCount = count
     }
   }
 }

@@ -128,6 +128,7 @@ export default {
           })
 
         this.users = searchUsers
+        this.$emit('afterSearch', searchUsers.length)
         this.isLoading= false
 
       } catch (err) {
