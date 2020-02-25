@@ -16,8 +16,12 @@
       </a>
 
       <!-- search form -->
-      <form id="search-form" class="form-inline position-relative">
-        <input id="search-input" class="form-control mr-sm-2" type="text" placeholder="Search user" required>
+      <form id="search-form" class="form-inline position-relative" @submit.prevent="handleSearch">
+        <input id="search-input" class="form-control mr-sm-2" type="text"
+          v-model="search"
+          placeholder="Search user"
+          required
+        >
         <span class="search-icon">
           <button type="submit" class="search-icon-btn"></button>
         </span>
@@ -70,6 +74,9 @@
 </template>
 
 <script>
+import usersAPI from '../apis/users.js'
+import { Toast } from '../utils/helpers.js'
+
 export default {
   props: {
     findCount: {
@@ -79,6 +86,38 @@ export default {
     followingCount: {
       type: Number,
       required: true
+    }
+  },
+  data() {
+    return {
+      search: ''
+    }
+  },
+  methods: {
+    async handleSearch() {
+      try {
+        const searchFormat = this.search.trim()
+        if (!searchFormat) return false
+        const regex = new RegExp(searchFormat, 'i')
+
+        // Query API
+        const response = await usersAPI.getUsers()
+        if (response.statusText !== 'OK') { throw new Error(response.statusText) }
+
+        const users = response.data.results
+        const searchUsers = users.filter(user => {
+          const account = user.email.split('@')[0]
+          return regex.test(account)
+        })
+
+        this.$emit('afterSearch', searchUsers)
+
+      } catch (err) {
+        Toast.fire({
+          icon: 'error',
+          title: '伺服器忙碌中，請稍後再試'
+        })
+      }
     }
   }
 }

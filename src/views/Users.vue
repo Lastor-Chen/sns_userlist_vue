@@ -41,6 +41,9 @@ export default {
     mode: {
       type: String,
       required: true
+    },
+    searchUsers: {
+      type: Array
     }
   },
   data () {
@@ -62,6 +65,9 @@ export default {
       // 真實跳頁，重掛 scroll 監聽
       $(window).scrollTop(0)
       this.$router.go()
+    },
+    searchUsers: function(newVal) {
+      this.users = [...newVal]
     }
   },
   created () {
