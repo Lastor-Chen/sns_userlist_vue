@@ -1,10 +1,6 @@
-import axios from 'axios'
 import Swal from 'sweetalert2'
 
-const apiHelper = axios.create({
-  baseURL: 'https://lighthouse-user-api.herokuapp.com/api/v1'
-})
-
+// SweetAlert2 public config
 const Toast = Swal.mixin({
   toast: true,
   position: 'top-end',
@@ -13,4 +9,4 @@ const Toast = Swal.mixin({
   timerProgressBar: true
 })
 
-export { apiHelper, Toast }
+export { Toast }
