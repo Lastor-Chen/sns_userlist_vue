@@ -14,9 +14,10 @@
 
     <!-- main content -->
     <main role="main" class="pt-3">
-      <router-view 
+      <router-view
         :mode="mode"
         @afterFetchUsers="afterFetchUsers"
+        @afterFetchFollowing="afterFetchFollowing"
         @afterToggleFollow="afterToggleFollow"
         @afterLoadUsers="afterLoadUsers"
       />
@@ -40,7 +41,7 @@ export default {
     return {
       mode: 'card',
       findCount: 0,
-      followingCount: 0,
+      followingCount: 0
     }
   },
   components: {
@@ -61,6 +62,9 @@ export default {
     },
     afterFetchUsers(count) {
       this.findCount = count
+    },
+    afterFetchFollowing() {
+      this.findCount = 0
     },
     afterLoadUsers(count) {
       this.findCount = count

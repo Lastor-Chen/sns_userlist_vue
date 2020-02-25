@@ -42,7 +42,7 @@ export default {
       initialUsers: [],
       users: [],
       LIMIT: 24,
-      isLoading: false
+      route: this.$route.name
     }
   },
   components: {
@@ -50,15 +50,15 @@ export default {
     UserList
   },
   watch: {
-    '$route': function(to) {
-      if (to.name === 'find') { this.fetchUsers() }
-      if (to.name === 'following') { this.fetchFollowing() }
+    '$route': function() {
+      // 真實跳頁，重掛 scroll 監聽
+      $(window).scrollTop(0)
+      this.$router.go()
     }
   },
   created () {
-    const route = this.$route.name
-    if (route === 'find') { this.fetchUsers() }
-    if (route === 'following') { this.fetchFollowing() }
+    if (this.route === 'find') { this.fetchUsers() }
+    if (this.route === 'following') { this.fetchFollowing() }
 
     // 監聽 scroll 無限下拉分頁
     $(window).on('scroll', this.handleScroll)
@@ -72,7 +72,7 @@ export default {
 
         const users = response.data.results
 
-        // 判斷 isFollowed
+        // 給 users 添加 isFollowed
         const following = JSON.parse(sessionStorage.getItem('following'))
         for (const user of users ) {
           user.isFollowed = following.some(followingUser => user.id === followingUser.id)
@@ -90,24 +90,40 @@ export default {
     fetchFollowing() {
       const following = JSON.parse(sessionStorage.getItem('following'))
       this.users = following
+
+      this.$emit('afterFetchFollowing')
     },
     afterToggleFollow(count) {
       this.$emit('afterToggleFollow', count)
+    },
+    findMore() {
+      const newUsers = this.initialUsers.splice(0, this.LIMIT)
+      this.users.push(...newUsers)
+
+      // 全載入後解除 scroll 監聽器
+      if (!this.initialUsers.length) { $(window).unbind('scroll') }
+    },
+    followingMore() {
+      const following = JSON.parse(sessionStorage.getItem('following'))
+      const offset = this.users.length
+      const usersLength = this.users.push(...following.slice(offset, this.LIMIT))
+
+      // 全載入後解除 scroll 監聽器
+      if (following.length === usersLength) { $(window).unbind('scroll') }
     },
     handleScroll() {
       // scroll 接近底部時，載入新 users
       const bottom = $(document).height() - $(window).height()
       if ($(window).scrollTop() >= (bottom - 300)) {
-        const newUsers = this.initialUsers.splice(0, this.LIMIT)
-        this.users.push(...newUsers)
+        if (this.route === 'find') {
+          this.findMore()
+          // 通知父層 users 數量
+          this.$emit('afterLoadUsers', this.users.length)
+        }
 
-        // 通知父層 users 數量
-        this.$emit('afterLoadUsers', this.users.length)
-      }
-
-      // 全載入後解除 scroll 監聽器
-      if (!this.initialUsers.length) {
-        $(window).unbind('scroll')
+        if (this.route === 'following') {
+          this.followingMore()
+        }
       }
     }
   }
