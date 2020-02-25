@@ -29,6 +29,7 @@ import UserCard from '../components/UserCard.vue'
 import UserList from '../components/UserList.vue'
 import usersAPI from '../apis/users.js'
 import $ from 'jquery'
+import { Toast } from '../utils/helpers.js'
 
 export default {
   props: {
@@ -84,7 +85,10 @@ export default {
         this.$emit('afterFetchUsers', this.users.length)
 
       } catch (err) {
-        console.error(err)
+        Toast.fire({
+          icon: 'error',
+          title: '伺服器忙碌中，請稍後再試'
+        })
       }
     },
     fetchFollowing() {
