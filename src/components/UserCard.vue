@@ -3,7 +3,7 @@
     <div class="card">
       <div class="banner">
         <img class="show-modal" 
-          src="https://picsum.photos/350/100?random=0"
+          :src="getRandomPhoto(index)"
           data-toggle="modal"
           data-target="#modal"
           :data-id="user.id"
@@ -42,6 +42,7 @@
 
 <script>
 import { getEmailAccount, toggleFollow } from '../utils/mixins.js'
+import getRandomPhoto from '../apis/photos.js'
 
 export default {
   mixins: [
@@ -51,7 +52,14 @@ export default {
     user: {
       type: Object,
       required: true
+    },
+    index: {
+      type: Number,
+      required: true
     }
+  },
+  methods: {
+    getRandomPhoto
   }
 }
 </script>

@@ -8,9 +8,10 @@
       <!-- user data panel -->
       <template v-if="mode === 'card'">
         <UserCard
-          v-for="user in users"
+          v-for="(user, index) in users"
           :key="user.id"
           :user="user"
+          :index="index"
           @afterToggleFollow="afterToggleFollow"
         />
       </template>
