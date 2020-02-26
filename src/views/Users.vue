@@ -62,20 +62,28 @@ export default {
   },
   watch: {
     '$route': function() {
-      // 真實跳頁，重掛 scroll 監聽
+      // 換路由後，初始化
+      this.route = this.$route.name
+      this.isLoading = true
       $(window).scrollTop(0)
-      this.$router.go()
+      this.handleRoute()
+
+      $(window).unbind('scroll')
+      $(window).on('scroll', this.handleScroll)
     }
   },
   created () {
-    if (this.route === 'find') { this.fetchUsers() }
-    if (this.route === 'following') { this.fetchFollowing() }
-    if (this.route === 'search') { this.fetchSearch() }
+    this.handleRoute()
 
     // 監聽 scroll 無限下拉分頁
     $(window).on('scroll', this.handleScroll)
   },
   methods: {
+    handleRoute() {
+      if (this.route === 'find') { this.fetchUsers() }
+      if (this.route === 'following') { this.fetchFollowing() }
+      if (this.route === 'search') { this.fetchSearch() }
+    },
     async fetchUsers() {
       try {
         // 打 API 取得 users

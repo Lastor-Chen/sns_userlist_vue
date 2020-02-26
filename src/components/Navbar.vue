@@ -96,7 +96,9 @@ export default {
       const query = this.search.trim()
       if (!query) return false
 
-      this.$router.push(`/search?q=${query}`)
+      this.$router
+        .push(`/search?q=${query}`)
+        .catch(() => {})
     }
   }
 }
