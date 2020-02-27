@@ -47,7 +47,7 @@ export default {
       required: true
     }
   },
-  data () {
+  data() {
     return {
       initialUsers: [],
       users: [],
@@ -75,10 +75,10 @@ export default {
       this.observer.observe(this.$refs.ob)
     }
   },
-  created () {
+  created() {
     this.handleRoute()
   },
-  mounted () {
+  mounted() {
     // 無限下拉分頁
     this.observer = new IntersectionObserver(this.obCallback)
     this.observer.observe(this.$refs.ob)
@@ -109,7 +109,7 @@ export default {
         this.$emit('afterFetchUsers', this.users.length)
         this.isLoading = false
 
-      } catch (err) {
+      } catch(err) {
         this.isLoading = false
         Toast.fire({
           icon: 'error',
@@ -147,7 +147,7 @@ export default {
         this.$emit('afterSearch', searchUsers.length)
         this.isLoading= false
 
-      } catch (err) {
+      } catch(err) {
         this.isLoading = false
         Toast.fire({
           icon: 'error',
