@@ -21,7 +21,6 @@
           name="q"
           v-model="search"
           placeholder="Search user"
-          required
         >
         <span class="search-icon">
           <button type="submit" class="search-icon-btn"></button>
@@ -101,7 +100,7 @@ export default {
   methods: {
     handleSearch() {
       const query = this.search.trim()
-      if (!query) return false
+      if (!query) return this.$router.push('/find')
 
       this.$router
         .push(`/search?q=${query}`)
