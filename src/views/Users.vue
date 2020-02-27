@@ -67,6 +67,7 @@ export default {
       // 換路由後，初始化
       this.route = this.$route.name
       this.isLoading = true
+      this.$parent.searchCount = 0
       $(window).scrollTop(0)
       this.handleRoute()
 
